@@ -7,6 +7,8 @@
 Ansible documentation: https://docs.ansible.com/
 This setup is testet in my production enviroment. Please adjust to your own enviroment and preferences.
 
+## Hardware setup
+
 ### _My server setup setup:_
 - Ubuntu 22.04
 - Raspberry Pi v. [1, 2, 3, 4]
