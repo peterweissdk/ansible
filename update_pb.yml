@@ -1,5 +1,6 @@
 ---
-- hosts: servers
+- name: Update & upgrade server(s) @flems.dk
+  hosts: servers
   become: true
   become_user: root
   tasks:
