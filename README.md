@@ -44,7 +44,6 @@ Ansible is available for Linux, MacOS and Windows
 
 ## License
 
-MIT
 
 **Free Software... But of Course!**
 
