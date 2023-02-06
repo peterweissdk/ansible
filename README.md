@@ -1,6 +1,6 @@
 # Ansible
-###### _... a suite of software tools that enables infrastructure as code._
-### _Ansible playbook update servers @flems.dk_
+###### __... a suite of software tools that enables infrastructure as code.__
+### _Ansible playbook update servers for my personal use..._
 
 
 
@@ -39,10 +39,33 @@ Ceck if all the nodes listed in the inventory are alive by running the command b
 ```sh
 $ ansible all -m ping
 ```
+
+## Ansible cmd examples
+Dry run
+```sh
+$ ansible-playbook -l servers -K update_pb.yml --check
+```
+Update servers in 'servers' group
+```sh
+$ ansible-playbook -l servers -K update_pb.yml
+```
+Override host in inventory group
+```sh
+$ ansible-playbook -l pi -K --limit '!192.168.1.3' update_pb.yml
+```
+List the inventory in a "graph" way
+```sh
+$ ansible-inventory --graph -i hosts
+```
+
 ## Note!!!
 
-Ansible is available for Linux, MacOS and Windows
-
+Ansible {options] :
+-K -> elevate user calling sudo
+-l -> runs specific group from inventory file
+-i -> path to inventory file
+--check -> dry run
+--limit -> override og add spicific host to use with playbook
 
 ## License
 
@@ -60,3 +83,4 @@ You should have received a copy of the GNU General Public License along with thi
 ###### _I used [Dillinger](https://dillinger.io) to create this file_
 
 [//]: # (misc. -comments)
+
