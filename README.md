@@ -61,11 +61,11 @@ $ ansible-inventory --graph -i hosts
 ## Note!!!
 
 Ansible {options] :
--K -> elevate user calling sudo
--l -> runs specific group from inventory file
--i -> path to inventory file
---check -> dry run
---limit -> override og add spicific host to use with playbook
+- -K -> elevate user calling sudo
+- -l -> runs specific group from inventory file
+- -i -> path to inventory file
+- --check -> dry run
+- --limit -> override og add spicific host to use with playbook
 
 ## License
 
