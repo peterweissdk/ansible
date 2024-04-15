@@ -1,0 +1,15 @@
+---
+- name: Reboot K3S cluster @flems.dk
+  hosts: cluster
+  become: true
+  become_user: root
+  tasks:
+    - name: Rebooting cluster
+      ansible.builtin.reboot:
+        msg: "Machine is going down for a reboot - Reboot initiated by Ansible"
+      register: reboot_result
+
+    - name: Validate reboot
+      assert:
+        that: reboot_result.rebooted == true
+        # Checks if the reboot was successful

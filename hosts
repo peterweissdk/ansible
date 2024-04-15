@@ -1,27 +1,48 @@
----
-all:
-  children:
+spaceboy ansible_host=192.168.1.2
+rocketeer ansible_host=192.168.1.3
+buzz ansible_host=192.168.1.4
+spock ansible_host=192.168.1.5
+orion ansible_host=192.168.1.6
+nova ansible_host=192.168.1.7
+deadpool ansible_host=192.168.1.8
+mail ansible_host=192.168.1.9
+thanos ansible_host=192.168.1.10
 
-    servers:
-      hosts:
-        192.168.1.2:
-        192.168.1.3:
-        192.168.1.4:
-        192.168.1.5:
-        192.168.1.6:
-        192.168.1.7:
-        192.168.1.9:
-        192.168.1.10:
+[mailcow]
+mail
 
-    mailcow:
-      hosts:
-        192.168.1.9:
+[pi]
+spaceboy
+rocketeer
+buzz
+spock
+orion
+nova
 
-    pi:
-      hosts:
-        192.168.1.2:
-        192.168.1.3:
-        192.168.1.4:
-        192.168.1.5:
-        192.168.1.6:
-        192.168.1.7:
+[x86]
+deadpool
+mail
+thanos
+
+[cluster]
+buzz
+spock
+orion
+nova
+
+[all]
+spaceboy
+rocketeer
+buzz
+spock
+orion
+nova
+deadpool
+mail
+thanos
+
+[all:vars]
+ansible_user=peterweissdk
+
+[x86:vars]
+ansible_user=peterweissdk

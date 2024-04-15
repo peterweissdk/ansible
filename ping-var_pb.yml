@@ -1,0 +1,7 @@
+---
+- name: Ping
+  hosts: "{{ nodes }}"
+  gather_facts: no
+  tasks:
+    - name: Ping host
+      ping:

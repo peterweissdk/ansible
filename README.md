@@ -1,6 +1,6 @@
 # Ansible
 ###### __... a suite of software tools that enables infrastructure as code.__
-### _Ansible playbook update servers for my personal use..._
+### _Ansible playbooks for my personal use..._
 
 
 
@@ -34,7 +34,7 @@ pacman -S ansible-core
 
 Ajust hosts and ansible.cfg in /etc/ansible/ to your needs
 
-Ceck if all the nodes listed in the inventory are alive by running the command below
+Check if all the nodes listed in the inventory are alive by running the command below
 
 ```sh
 $ ansible all -m ping
@@ -49,6 +49,14 @@ Update servers in 'servers' group
 ```sh
 $ ansible-playbook -l servers -K update_pb.yml
 ```
+Install package with apt
+```sh
+$ ansible-playbook apt-install_pb.yml -K --extra-vars="nodes=<HOST>, package=<PACKAGE>"
+```
+Remove package with apt
+```sh
+$ ansible-playbook apt-remove_pb.yml -K --extra-vars="nodes=<HOST>, package=<PACKAGE>"
+```
 Override host in inventory group
 ```sh
 $ ansible-playbook -l pi -K --limit '!192.168.1.3' update_pb.yml
@@ -61,6 +69,7 @@ $ ansible-inventory --graph -i hosts
 ## Note!!!
 
 Ansible {options] :
+
 - -K -> elevate user calling sudo
 - -l -> runs specific group from inventory file
 - -i -> path to inventory file
@@ -80,7 +89,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-###### _I used [Dillinger](https://dillinger.io) to create this file_
+###### _I used [Apostrophe](https://apps.gnome.org/Apostrophe/) to create this file_
 
 [//]: # (misc. -comments)
 

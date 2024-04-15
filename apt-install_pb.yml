@@ -1,0 +1,12 @@
+---
+- name: Running apt install commands
+  become: true
+  hosts: "{{ nodes }}"
+
+  tasks:
+  - name: Ensure {{ package }} is installed
+    apt:
+      name: "{{ package }}"
+      state: present
+      update_cache: true
+      cache_valid_time: 3600 # Updates the cache  if the current cache is built 3600 seconds(1 hour)
