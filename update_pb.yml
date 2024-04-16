@@ -1,4 +1,5 @@
 ---
+# Playbook takes 1 variable. Run playbook with: --extra-vars="nodes=<HOST(S)>"
 - name: Update & upgrade server(s)
   hosts: "{{ nodes }}"
   become: true
