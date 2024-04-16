@@ -1,6 +1,6 @@
 ---
-- name: Shutdown servers @flems.dk
-  hosts: all
+- name: Shutdown server(s)
+  hosts: "{{ nodes }}"
   become: true
   become_user: root
   tasks:

@@ -1,0 +1,14 @@
+---
+# Playbook takes 2 variables. Run playbook with: --extra-vars="nodes=<HOST(S)>, service=<SERVICE>" 
+- name: Restart service @{{ nodes }}
+  hosts: "{{ nodes }}"
+  become: yes
+  become_user: root
+  tasks:
+    # This task ensures that service is restarted and running.
+    - name: Restart {{ service }} 
+      systemd:
+        name: "{{ service }}"
+        state: restarted
+        daemon_reload: true
+#       register: service_status

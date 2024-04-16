@@ -1,10 +1,10 @@
 ---
-- name: Running apt remove commands
+- name: Remove package on server(s)
   become: true
   hosts: "{{ nodes }}"
 
   tasks:
-  - name: Ensure {{ package }} is removed
+  - name: Remove {{ package }}
     apt:
       name: "{{ package }}"
       state: absent

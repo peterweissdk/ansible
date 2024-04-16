@@ -1,9 +1,10 @@
 ---
-- hosts: all
+- name: System info
+  hosts: all
   tasks:
-  - name: hostname
-    debug:
-      var=ansible_hostname
+    - name: hostname
+      debug:
+        var=ansible_hostname
 
   - name: date and time
     vars:

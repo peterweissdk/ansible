@@ -1,0 +1,16 @@
+---
+# Playbook takes 2 variables. Run playbook with: --extra-vars="nodes=<HOST(S)>, service=<SERVICE>" 
+- name: Stop service @{{ nodes }}
+  hosts: "{{ nodes }}"
+  become: yes
+  become_user: root
+  tasks:
+    # This task ensures that service is stopped.
+    - name: Stopping {{ service }} 
+      systemd:
+        name: "{{ service }}"
+        state: stopped
+#     register: service_status
+#   - name: Report
+#     debug:
+#       var: service_status

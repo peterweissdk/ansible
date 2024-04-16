@@ -1,0 +1,14 @@
+---
+# Playbook takes 2 variables. Run playbook with: --extra-vars="nodes=<HOST(S)>, service=<SERVICE>" 
+- name: Start service @{{ nodes }}
+  hosts: "{{ nodes }}"
+  become: yes
+  become_user: root
+  tasks:
+    # This task ensures that service is running and enabled on boot.
+    - name: Starting {{ service }} 
+      systemd:
+        name: "{{ service }}"
+        state: started
+        enabled: yes
+#     register: service_status

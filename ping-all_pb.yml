@@ -1,6 +1,6 @@
 ---
-- name: Ping
-  hosts: "{{ nodes }}"
+- name: Ping all server(s)
+  hosts: all
   gather_facts: no
   tasks:
     - name: Ping host

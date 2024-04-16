@@ -1,10 +1,10 @@
 ---
-- name: Running apt install commands
+- name: Install package on server(s)
   become: true
   hosts: "{{ nodes }}"
 
   tasks:
-  - name: Ensure {{ package }} is installed
+  - name: Install {{ package }}
     apt:
       name: "{{ package }}"
       state: present

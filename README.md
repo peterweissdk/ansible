@@ -43,23 +43,23 @@ $ ansible all -m ping
 ## Ansible cmd examples
 Dry run
 ```sh
-$ ansible-playbook -l servers -K update_pb.yml --check
+$ ansible-playbook -K update_pb.yml --extra-vars="nodes=<HOST>" --check
 ```
-Update servers in 'servers' group
+Update server single node or group in HOST
 ```sh
-$ ansible-playbook -l servers -K update_pb.yml
+$ ansible-playbook -K update_pb.yml --extra-vars="nodes=<HOST>"
 ```
-Install package with apt
+Install <PACKAGE> with apt on server single node or group in HOST
 ```sh
 $ ansible-playbook apt-install_pb.yml -K --extra-vars="nodes=<HOST>, package=<PACKAGE>"
 ```
-Remove package with apt
+Remove PACKAGE with apt on server single node or group in HOST
 ```sh
 $ ansible-playbook apt-remove_pb.yml -K --extra-vars="nodes=<HOST>, package=<PACKAGE>"
 ```
-Override host in inventory group
+Skip HOST in inventory group
 ```sh
-$ ansible-playbook -l pi -K --limit '!192.168.1.3' update_pb.yml
+$ ansible-playbook ping-all_pb.yml --limit '!<HOST>'
 ```
 List the inventory in a "graph" way
 ```sh
