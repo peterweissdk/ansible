@@ -1,13 +1,25 @@
 ---
-# Playbook takes 2 variables. Run playbook with: --extra-vars="nodes=<HOST(S)>, package=<PACKAGE>"
-- name: Install package on server(s)
+# Usage:
+#   ansible-playbook apt-install_pb.yml --limit <HOSTS> --extra-vars="packages=['pkg1','pkg2']"
+# Or for a single package:
+#   ansible-playbook apt-install_pb.yml --limit <HOSTS> --extra-vars="packages=pkg1"
+# Optional: state=present|absent|latest (default: present)
+- name: Install package(s) on server(s)
   become: true
-  hosts: "{{ nodes }}"
+  hosts: all
+
+  pre_tasks:
+    - name: Validate required variables
+      ansible.builtin.assert:
+        that:
+          - packages is defined
+        fail_msg: "Required variable 'packages' must be defined"
+        quiet: true
 
   tasks:
-  - name: Install {{ package }}
-    apt:
-      name: "{{ package }}"
-      state: present
-      update_cache: true
-      cache_valid_time: 3600 # Updates the cache  if the current cache is built 3600 seconds(1 hour)
+    - name: Manage packages
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: "{{ state | default('present') }}"
+        update_cache: true
+        cache_valid_time: 3600

@@ -1,14 +1,22 @@
 ---
-# Playbook takes 2 variables. Run playbook with: --extra-vars="nodes=<HOST(S)>, service=<SERVICE>" 
-- name: Restart service @{{ nodes }}
-  hosts: "{{ nodes }}"
-  become: yes
-  become_user: root
+# Usage:
+#   ansible-playbook service-restart_pb.yml --limit <HOSTS> -e "service=<SERVICE>"
+# Optional: daemon_reload=true to reload systemd (default: false)
+- name: Restart service on server(s)
+  hosts: all
+  become: true
+
+  pre_tasks:
+    - name: Validate required variables
+      ansible.builtin.assert:
+        that:
+          - service is defined
+        fail_msg: "Required variable 'service' must be defined"
+        quiet: true
+
   tasks:
-    # This task ensures that service is restarted and running.
-    - name: Restart {{ service }} 
-      systemd:
+    - name: Restart {{ service }}
+      ansible.builtin.systemd:
         name: "{{ service }}"
         state: restarted
-        daemon_reload: true
-#       register: service_status
+        daemon_reload: "{{ daemon_reload | default(false) }}"

@@ -1,16 +1,22 @@
 ---
-# Playbook takes 2 variables. Run playbook with: --extra-vars="nodes=<HOST(S)>, service=<SERVICE>" 
-- name: Stop service @{{ nodes }}
-  hosts: "{{ nodes }}"
-  become: yes
-  become_user: root
+# Usage:
+#   ansible-playbook service-stop_pb.yml --limit <HOSTS> -e "service=<SERVICE>"
+# Optional: disabled=true to disable on boot (default: false)
+- name: Stop service on server(s)
+  hosts: all
+  become: true
+
+  pre_tasks:
+    - name: Validate required variables
+      ansible.builtin.assert:
+        that:
+          - service is defined
+        fail_msg: "Required variable 'service' must be defined"
+        quiet: true
+
   tasks:
-    # This task ensures that service is stopped.
-    - name: Stopping {{ service }} 
-      systemd:
+    - name: Stop {{ service }}
+      ansible.builtin.systemd:
         name: "{{ service }}"
         state: stopped
-#     register: service_status
-#   - name: Report
-#     debug:
-#       var: service_status
+        enabled: "{{ not (disabled | default(false) | bool) }}"

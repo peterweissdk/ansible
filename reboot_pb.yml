@@ -1,16 +1,18 @@
 ---
-# Playbook takes 1 variable. Run playbook with: --extra-vars="nodes=<HOST(S)>"
+# Usage:
+#   ansible-playbook reboot_pb.yml --limit <HOSTS>
 - name: Reboot server(s)
-  hosts: "{{ nodes }}"
+  hosts: all
   become: true
-  become_user: root
+
   tasks:
-    - name: Rebooting {{ nodes }}
+    - name: Reboot host
       ansible.builtin.reboot:
-        msg: "Machine is going down for a reboot - Reboot initiated by Ansible"
+        msg: "Reboot initiated by Ansible"
       register: reboot_result
 
     - name: Validate reboot
-      assert:
-        that: reboot_result.rebooted == true
-        # Checks if the reboot was successful
+      ansible.builtin.assert:
+        that: reboot_result.rebooted
+        fail_msg: "Reboot failed on {{ inventory_hostname }}"
+        quiet: true

@@ -1,10 +1,11 @@
 ---
-# Playbook takes 1 variable. Run playbook with: --extra-vars="nodes=<HOST(S)>"
+# Usage:
+#   ansible-playbook shutdown_pb.yml --limit <HOSTS>
 - name: Shutdown server(s)
-  hosts: "{{ nodes }}"
+  hosts: all
   become: true
-  become_user: root
+
   tasks:
-    - name: Unconditionally shut down the machine with all defaults
+    - name: Shutdown host
       community.general.shutdown:
         msg: "Shutdown initiated by Ansible"

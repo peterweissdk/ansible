@@ -1,8 +1,10 @@
 ---
-# Playbook takes 1 variable. Run playbook with: --extra-vars="nodes=<HOST(S)>"
+# Usage:
+#   ansible-playbook ping_pb.yml --limit <HOSTS>
 - name: Ping server(s)
-  hosts: "{{ nodes }}"
-  gather_facts: no
+  hosts: all
+  gather_facts: false
+
   tasks:
     - name: Ping host
-      ping:
+      ansible.builtin.ping:

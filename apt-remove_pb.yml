@@ -1,11 +1,24 @@
 ---
-# Playbook takes 2 variables. Run playbook with: --extra-vars="nodes=<HOST(S)>, package=<PACKAGE>"
-- name: Remove package on server(s)
+# Usage:
+#   ansible-playbook apt-remove_pb.yml --limit <HOSTS> -e "packages=['pkg1','pkg2']"
+# Or for a single package:
+#   ansible-playbook apt-remove_pb.yml --limit <HOSTS> -e "packages=pkg1"
+# Optional: purge=true to remove config files (default: false)
+- name: Remove package(s) on server(s)
   become: true
-  hosts: "{{ nodes }}"
+  hosts: all
+
+  pre_tasks:
+    - name: Validate required variables
+      ansible.builtin.assert:
+        that:
+          - packages is defined
+        fail_msg: "Required variable 'packages' must be defined"
+        quiet: true
 
   tasks:
-  - name: Remove {{ package }}
-    apt:
-      name: "{{ package }}"
-      state: absent
+    - name: Remove packages
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: absent
+        purge: "{{ purge | default(false) }}"

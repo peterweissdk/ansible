@@ -1,46 +1,29 @@
 ---
-# Playbook takes 1 variable. Run playbook with: --extra-vars="nodes=<HOST(S)>"
+# Usage:
+#   ansible-playbook system-info_pb.yml --limit <HOSTS>
 - name: System info
-  hosts: "{{ nodes }}"
+  hosts: all
+
   tasks:
-    - name: hostname
-      debug: var=ansible_hostname
-
-    - name: date and time
-      vars:
-       msg: |
-        Date: {{ ansible_date_time.date }}
-        Timezone: {{ ansible_date_time.tz }}
-      debug:
-       msg: "{{ msg.split('\n') }}"
-
-    - name: network info
-      vars:
-       msg: |
-        All Interface List: {{ ansible_interfaces }}
-        All IP: {{ ansible_all_ipv4_addresses }}
-        Gateway: {{ ansible_default_ipv4.gateway }}
-    #     Eth0 MAC: {{ ansible_eth0.macaddress }}
-      debug:
-       msg: "{{ msg.split('\n') }}"
-
-    - name: OS and Kernel info
-      vars:
-       msg: |
-        Distribution: {{ ansible_distribution }}
-        Release: {{ ansible_distribution_release }}
-        Distribution Version: {{ ansible_distribution_version }}
-        Kernel: {{ ansible_kernel }}
-        Architecture: {{ ansible_architecture }}
-      debug:
-       msg: "{{ msg.split('\n') }}"
-
-    - name: HW info
-      vars:
-       msg: |
-        CPU: {{ ansible_processor }}
-        CPU Core: {{ ansible_processor_cores }}
-        RAM: {{ ansible_memtotal_mb }}
-        SWAP: {{ ansible_memory_mb.swap.total }}
-      debug:
-       msg: "{{ msg.split('\n') }}"
+    - name: Display system information
+      ansible.builtin.debug:
+        msg:
+          - "=== {{ ansible_hostname }} ==="
+          - ""
+          - "Date: {{ ansible_date_time.date }} ({{ ansible_date_time.tz }})"
+          - ""
+          - "--- Network ---"
+          - "Interfaces: {{ ansible_interfaces | join(', ') }}"
+          - "IP addresses: {{ ansible_all_ipv4_addresses | join(', ') }}"
+          - "Gateway: {{ ansible_default_ipv4.gateway | default('N/A') }}"
+          - ""
+          - "--- OS & Kernel ---"
+          - "Distribution: {{ ansible_distribution }} {{ ansible_distribution_version }} ({{ ansible_distribution_release }})"
+          - "Kernel: {{ ansible_kernel }}"
+          - "Architecture: {{ ansible_architecture }}"
+          - ""
+          - "--- Hardware ---"
+          - "CPU: {{ ansible_processor[2] | default(ansible_processor[1] | default('Unknown')) }}"
+          - "Cores: {{ ansible_processor_cores }}"
+          - "RAM: {{ ansible_memtotal_mb }} MB"
+          - "Swap: {{ ansible_memory_mb.swap.total }} MB"
