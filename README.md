@@ -1,95 +1,101 @@
-# Ansible
-###### __... a suite of software tools that enables infrastructure as code.__
-### _Ansible playbooks for my personal use..._
+# 💾 Ansible
 
+> A suite of software tools that enables infrastructure as code.
 
+Ansible playbooks for my personal use. Tested in my production environment.
 
-Ansible documentation: https://docs.ansible.com/
-This setup is testet in my production enviroment. Please adjust to your own enviroment and preferences.
+📖 [Ansible Documentation](https://docs.ansible.com/)
 
-## Hardware setup
+## ✨ Features
 
-### _My server setup setup:_
-- Ubuntu 22.04
-- Raspberry Pi v. [1, 2, 3, 4]
-- Intel Nuc
+- **Package Management** — Install, remove, and update packages via apt
+- **Service Control** — Start, stop, and restart systemd services
+- **System Operations** — Reboot, shutdown, and gather system info
+- **Multi-host Support** — Target single hosts, groups, or patterns with `--limit`
 
-### _My Ansible host setup:_
-- Arch Linux
-- Generic laptop
+## 🚀 Quick Start
 
-## Installation
+### Prerequisites
 
-Install OpenSSH and corresponding ssh-keys at your servers
-
+**On target servers:**
 ```sh
 sudo apt install openssh-server
 ```
 
-Install Ansible
-
+**On Ansible host (Arch Linux):**
 ```sh
 pacman -S ansible-core
 ```
 
-Ajust hosts and ansible.cfg in /etc/ansible/ to your needs
-
-Check if all the nodes listed in the inventory are alive by running the command below
-
+### Verify connectivity
 ```sh
-$ ansible all -m ping
+ansible all -m ping --limit <HOST>
 ```
 
-## Ansible cmd examples
-Dry run
+### Usage Examples
+
 ```sh
-$ ansible-playbook -K update_pb.yml --extra-vars="nodes=<HOST>" --check
-```
-Update server single node or group in HOST
-```sh
-$ ansible-playbook -K update_pb.yml --extra-vars="nodes=<HOST>"
-```
-Install <PACKAGE> with apt on server single node or group in HOST
-```sh
-$ ansible-playbook apt-install_pb.yml -K --extra-vars="nodes=<HOST>, package=<PACKAGE>"
-```
-Remove PACKAGE with apt on server single node or group in HOST
-```sh
-$ ansible-playbook apt-remove_pb.yml -K --extra-vars="nodes=<HOST>, package=<PACKAGE>"
-```
-Skip HOST in inventory group
-```sh
-$ ansible-playbook ping-all_pb.yml --limit '!<HOST>'
-```
-List the inventory in a "graph" way
-```sh
-$ ansible-inventory --graph -i hosts
+# Update and upgrade servers
+ansible-playbook apt-update_pb.yml --limit webservers -K
+
+# Install packages
+ansible-playbook apt-install_pb.yml --limit pi -K -e "packages=['htop','curl']"
+
+# Remove packages
+ansible-playbook apt-remove_pb.yml --limit dbservers -K -e "packages=nginx"
+
+# Restart a service
+ansible-playbook service-restart_pb.yml --limit mail -K -e "service=postfix"
+
+# Get system info
+ansible-playbook system-info_pb.yml --limit deadpool
+
+# Dry run (check mode)
+ansible-playbook apt-update_pb.yml --limit all -K --check
 ```
 
-## Note!!!
+## 🔧 Configuration
 
-Ansible {options] :
+### Ansible Options
 
-- -K -> elevate user calling sudo
-- -l -> runs specific group from inventory file
-- -i -> path to inventory file
-- --check -> dry run
-- --limit -> override og add spicific host to use with playbook
+| Flag | Description |
+|------|-------------|
+| `-K` | Prompt for sudo password |
+| `-i` | Path to inventory file |
+| `--limit` | Target specific hosts/groups |
+| `--check` | Dry run (no changes) |
+| `-e` | Pass extra variables |
 
-## License
+### List inventory
+```sh
+ansible-inventory --graph -i hosts
+```
 
+## 📝 Directory Structure
 
-**Free Software... But of Course!**
+```
+ansible/
+├── apt-install_pb.yml    # Install packages
+├── apt-remove_pb.yml     # Remove packages
+├── apt-update_pb.yml     # Update & upgrade system
+├── ping_pb.yml           # Test connectivity
+├── ping-all_pb.yml       # Ping all hosts
+├── reboot_pb.yml         # Reboot servers
+├── shutdown_pb.yml       # Shutdown servers
+├── service-start_pb.yml  # Start services
+├── service-stop_pb.yml   # Stop services
+├── service-restart_pb.yml# Restart services
+└── system-info_pb.yml    # Display system information
+```
 
-Copyright [2023] [PeterWeissDK]
+## 🤝 Contributing
 
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+## 🆘 Support
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+If you encounter any issues or need support, please file an issue on the GitHub repository.
 
-###### _I used [Apostrophe](https://apps.gnome.org/Apostrophe/) to create this file_
+## 📄 License
 
-[//]: # (misc. -comments)
-
+This project is licensed under the GNU GENERAL PUBLIC LICENSE v3.0 - see the [LICENSE](LICENSE) file for details.
