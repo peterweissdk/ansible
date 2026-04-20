@@ -3,11 +3,14 @@
 [![Static Badge](https://img.shields.io/badge/Ansible-Automation-white?style=flat&logo=ansible&logoColor=white&logoSize=auto&labelColor=black)](https://docs.ansible.com/)
 [![Static Badge](https://img.shields.io/badge/GPL-V3-white?style=flat&logo=gnu&logoColor=white&logoSize=auto&labelColor=black)](https://www.gnu.org/licenses/gpl-3.0.en.html/)
 
-> A suite of software tools that enables infrastructure as code.
-
-Ansible playbooks for my personal use. Tested in my production environment.
+Ansible, a suite of software tools that enables infrastructure as code.
 
 📖 [Ansible Documentation](https://docs.ansible.com/)
+
+Ansible playbooks for my personal use. Tested in my production environment.
+- **Servers** —  Debian based systems
+- **Laptop** — Arch based systems
+
 
 ## ✨ Features
 
