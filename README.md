@@ -45,16 +45,16 @@ ansible all -m ping --limit <HOST>
 ansible-playbook apt-update_pb.yml --limit webservers -K
 
 # Install packages
-ansible-playbook apt-install_pb.yml --limit pi -K -e "packages=['htop','curl']"
+ansible-playbook apt-install_pb.yml --limit raspi -K -e "packages=['htop','curl']"
 
 # Remove packages
 ansible-playbook apt-remove_pb.yml --limit dbservers -K -e "packages=nginx"
 
 # Restart a service
-ansible-playbook service-restart_pb.yml --limit mail -K -e "service=postfix"
+ansible-playbook service-restart_pb.yml --limit webservers -K -e "service=postfix"
 
 # Get system info
-ansible-playbook system-info_pb.yml --limit deadpool
+ansible-playbook system-info_pb.yml --limit cluster
 
 # Dry run (check mode)
 ansible-playbook apt-update_pb.yml --limit all -K --check
@@ -81,17 +81,16 @@ ansible-inventory --graph -i hosts
 
 ```
 ansible/
-├── apt-install_pb.yml    # Install packages
-├── apt-remove_pb.yml     # Remove packages
-├── apt-update_pb.yml     # Update & upgrade system
-├── ping_pb.yml           # Test connectivity
-├── ping-all_pb.yml       # Ping all hosts
-├── reboot_pb.yml         # Reboot servers
-├── shutdown_pb.yml       # Shutdown servers
-├── service-start_pb.yml  # Start services
-├── service-stop_pb.yml   # Stop services
-├── service-restart_pb.yml# Restart services
-└── system-info_pb.yml    # Display system information
+├── apt-install_pb.yml        # Install packages
+├── apt-remove_pb.yml         # Remove packages
+├── apt-update_pb.yml         # Update & upgrade system
+├── ping_pb.yml               # Test connectivity
+├── reboot_pb.yml             # Reboot servers
+├── shutdown_pb.yml           # Shutdown servers
+├── service-start_pb.yml      # Start services
+├── service-stop_pb.yml       # Stop services
+├── service-restart_pb.yml    # Restart services
+└── system-info_pb.yml        # Display system information
 ```
 
 ## 🤝 Contributing
