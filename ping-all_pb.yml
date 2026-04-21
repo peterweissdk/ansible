@@ -1,8 +1,0 @@
----
-# Playbook runs on the all-entry in hosts file
-- name: Ping all server(s)
-  hosts: all
-  gather_facts: no
-  tasks:
-    - name: Ping host
-      ping:
